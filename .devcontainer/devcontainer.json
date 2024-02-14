@@ -24,6 +24,5 @@
                 "golang.go"
             ]
         }
-    },
-    "onCreateCommand": "go get -v -t -d ./..."
+    }
 }
