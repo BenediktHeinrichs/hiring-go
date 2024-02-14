@@ -1,0 +1,6 @@
+github.com/agonopol/go-stem v0.0.0-20150630113328-985885018250 h1:znLjWXbvRGRvFlxYoiRu4Yf38isHmYYG07scbZKKg9I=
+github.com/agonopol/go-stem v0.0.0-20150630113328-985885018250/go.mod h1:JpR7ykfRJUCcS6aOUCB6dPImrYufY0NoBCDg/wqeIIo=
+github.com/fluhus/gostuff v0.4.0 h1:uFzP7Uw2QAUBybd6hh7c7gLhaYrVftZw0iQkorZnWXA=
+github.com/fluhus/gostuff v0.4.0/go.mod h1:vR4cGqPneT1ztSCl8PM1yIqzPJpT54wckwPAxfMs3e0=
+github.com/ledongthuc/pdf v0.0.0-20240201131950-da5b75280b06 h1:kacRlPN7EN++tVpGUorNGPn/4DnB7/DfTY82AOn6ccU=
+github.com/ledongthuc/pdf v0.0.0-20240201131950-da5b75280b06/go.mod h1:imJHygn/1yfhB7XSJJKlFZKl/J+dCPAknuiaGOshXAs=
