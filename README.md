@@ -8,7 +8,7 @@ If you want to run it, use the commands:
 
 ```
 go build main.go
-.\main.exe
+./main
 ```
 
 ## Example Output
