@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Topic Extractor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 500px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .container h2 {
+            margin-bottom: 20px;
+        }
+
+        .container input[type="file"] {
+            margin: 20px 0;
+        }
+
+        .container button {
+            padding: 10px 20px;
+            border: none;
+            background: #28a745;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .container button:hover {
+            background: #218838;
+        }
+
+        .result {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>PDF Topic Extractor</h2>
+        <form id="pdfForm">
+            <input type="file" id="pdfFile" accept=".pdf" required>
+            <br>
+            <button type="submit">Extract Topics</button>
+        </form>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        document.getElementById('pdfForm').addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            // Get the file from the input
+            const fileInput = document.getElementById('pdfFile');
+            const file = fileInput.files[0];
+
+            if (!file) {
+                alert('Please select a PDF file.');
+                return;
+            }
+
+            // Create a FormData object and append the file
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                // Send the file to the server
+                const response = await fetch('./process-pdf', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to process the PDF');
+                }
+
+                // Parse the response JSON
+                const data = await response.json();
+
+                // Display the result
+                const resultDiv = document.getElementById('result');
+                resultDiv.innerHTML = ''; // Clear previous results
+
+                if (Object.keys(data.topics).length === 0) {
+                    resultDiv.innerHTML = '<p>No topics found.</p>';
+                    return;
+                }
+
+                for (const [column, topics] of Object.entries(data.topics)) {
+                    const columnHeader = document.createElement('h4');
+                    columnHeader.textContent = column;
+                    resultDiv.appendChild(columnHeader);
+
+                    const topicList = document.createElement('ul');
+                    topics.forEach(topic => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = topic;
+                        topicList.appendChild(listItem);
+                    });
+                    resultDiv.appendChild(topicList);
+                }
+            } catch (error) {
+                const resultDiv = document.getElementById('result');
+                resultDiv.innerHTML = `<p class="error">${error.message}</p>`;
+            }
+        });
+    </script>
+
+</body>
+
+</html>
